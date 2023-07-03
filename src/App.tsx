@@ -8,7 +8,13 @@ import Characters from "./components/Characters";
 import Locations from "./components/Locations";
 import Episodes from "./components/Episodes";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function App() {
   const [count, setCount] = useState(0);
