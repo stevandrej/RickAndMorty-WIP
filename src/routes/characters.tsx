@@ -3,7 +3,7 @@ import Characters from "../components/Characters";
 import useGetCharacters from "../queries/useGetCharacters";
 
 export default function CharactersPage() {
-  const { data, isFetching, isSuccess, isError } = useGetCharacters();
+  const { data } = useGetCharacters();
 
   return (
     <div className="py-12">
