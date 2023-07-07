@@ -1,28 +1,36 @@
-import Card from "../components/Card";
-import Characters from "../components/Characters";
+import Spinner from "../components/Spinner";
 import useGetCharacters from "../queries/useGetCharacters";
+import CharactersList from "../features/characters/CharactersList";
+import { ErrorBoundary } from "react-error-boundary";
 
 export default function CharactersPage() {
-  const { data } = useGetCharacters();
+  const { data, isLoading, isError, error } = useGetCharacters();
+
+  if (isLoading) {
+    return (
+      <div className="h-[calc(100vh-56px)] flex items-center justify-center">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
 
   return (
     <div className="py-12">
       <section className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {data?.results.map((character) => (
-            <Card
-              key={character.id}
-              image={character.image}
-              title={character.name}
-              strap={character.status}
-              description={character.location.name}
-              action={() => {
-                return;
-              }}
-            />
-          ))}
-        </div>
-        <Characters />
+        {isError ? (
+          <ErrorBoundary
+            fallback={<p>Something went wrong! Try reloading the page.</p>}
+          >
+            {error instanceof Error && (
+              <div>
+                <pre className="text-red-700">{error?.message}</pre>
+                <p>Something went wrong! Try reloading the page.</p>
+              </div>
+            )}
+          </ErrorBoundary>
+        ) : (
+          <CharactersList data={data} />
+        )}
       </section>
     </div>
   );
