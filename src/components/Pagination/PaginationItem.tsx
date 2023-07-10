@@ -8,14 +8,17 @@ interface PaginationItemProps {
 
 const PaginationItem = React.memo(
   ({ page, handleClick, isActive }: PaginationItemProps) => {
+    const activeClassName = isActive ? "bg-sky-600 text-white" : "";
+
     return (
-      <li
-        className={`border border-slate-600 rounded-full p-4 w-8 h-8 flex items-center justify-center cursor-pointer ${
-          isActive && "bg-sky-600 text-white"
-        }`}
-        onClick={() => handleClick(page)}
-      >
-        {page}
+      <li>
+        <button
+          className={`border border-slate-600 rounded-full flex items-center justify-center p-4 w-8 h-8 ${activeClassName}`}
+          disabled={isActive}
+          onClick={() => handleClick(page)}
+        >
+          {page}
+        </button>
       </li>
     );
   }
