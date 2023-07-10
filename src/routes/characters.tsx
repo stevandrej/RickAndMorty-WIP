@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import Spinner from "../components/Spinner";
 import useGetCharacters from "../queries/useGetCharacters";
 import CharactersList from "../features/characters/CharactersList";
@@ -7,16 +6,10 @@ import Pagination from "../components/Pagination/Pagination";
 import { useSearchParams } from "react-router-dom";
 
 export default function CharactersPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = Number(searchParams.get("page") ?? 1);
-  const { data, isLoading, isError, error } = useGetCharacters(page);
+  const [searchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get("page") ?? 1);
 
-  const handlePageChange = useCallback(
-    (newPage: number) => {
-      setSearchParams({ page: newPage.toString() });
-    },
-    [setSearchParams]
-  );
+  const { data, isLoading, isError, error } = useGetCharacters(currentPage);
 
   if (isLoading) {
     return (
@@ -43,11 +36,7 @@ export default function CharactersPage() {
         ) : (
           <>
             <CharactersList data={data} />
-            <Pagination
-              onChange={handlePageChange}
-              current={page}
-              total={data.info.pages}
-            />
+            <Pagination total={data.info.pages} />
           </>
         )}
       </section>
