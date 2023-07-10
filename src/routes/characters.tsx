@@ -2,10 +2,18 @@ import Spinner from "../components/Spinner";
 import useGetCharacters from "../queries/useGetCharacters";
 import CharactersList from "../features/characters/CharactersList";
 import { ErrorBoundary } from "react-error-boundary";
-import Pagination from "../components/Pagination";
+import Pagination from "../components/Pagination/Pagination";
+import { useSearchParams } from "react-router-dom";
 
 export default function CharactersPage() {
-  const { data, isLoading, isError, error } = useGetCharacters();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = Number(searchParams.get("page") ?? 1);
+  console.log(page);
+  const { data, isLoading, isError, error } = useGetCharacters(page);
+
+  const handlePageChange = (newPage: number) => {
+    setSearchParams({ page: newPage.toString() });
+  };
 
   if (isLoading) {
     return (
@@ -32,7 +40,11 @@ export default function CharactersPage() {
         ) : (
           <>
             <CharactersList data={data} />
-            <Pagination />
+            <Pagination
+              onChange={handlePageChange}
+              current={page}
+              total={data.info.pages}
+            />
           </>
         )}
       </section>
