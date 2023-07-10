@@ -3,18 +3,13 @@ import { client } from "../services/client";
 import { PaginatedApiResponse } from "../types/PaginatedApiResponse";
 import { LocationFilter } from "../types/Location";
 
-export default function useGetLocations(
-  page = 1,
-  perPage = 50,
-  filter: LocationFilter = {}
-) {
+export default function useGetLocations(page = 1, filter: LocationFilter = {}) {
   const results = useQuery<PaginatedApiResponse<Location>>({
-    queryKey: ["locations", page, perPage, { ...filter }],
+    queryKey: ["locations", page, { ...filter }],
     queryFn: () =>
       client("/location", {
         params: {
           page,
-          perPage,
           ...filter,
         },
       }),

@@ -5,16 +5,14 @@ import { Character, CharacterFilter } from "../types/Character";
 
 export default function useGetCharacters(
   page = 1,
-  perPage = 50,
   filter: CharacterFilter = {}
 ) {
   const results = useQuery<PaginatedApiResponse<Character>>({
-    queryKey: ["characters", page, perPage, { ...filter }],
+    queryKey: ["characters", page, { ...filter }],
     queryFn: () =>
       client("/character", {
         params: {
           page,
-          perPage,
           ...filter,
         },
       }),
