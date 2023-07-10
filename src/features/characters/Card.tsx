@@ -10,6 +10,23 @@ interface CardProps {
 
 const Card = React.memo(
   ({ status, name, location, image, action }: CardProps) => {
+    const alive = "bg-green-600 ring-green-500 shadow-green-500 animate-pulse";
+    const dead = "bg-red-800 ring-red-600 shadow-red-500";
+    const unknown = "bg-gray-600 ring-gray-500 shadow-gray-500";
+    let statusStyle = "";
+
+    switch (status?.toLowerCase()) {
+      case "alive":
+        statusStyle = alive;
+        break;
+      case "dead":
+        statusStyle = dead;
+        break;
+      default:
+        statusStyle = unknown;
+        break;
+    }
+
     return (
       <div
         className="rounded-xl overflow-hidden relative min-h-[300px] cursor-pointer"
@@ -34,7 +51,12 @@ const Card = React.memo(
             border-t border-t-slate-400 text-gray-200 text-sm"
           >
             <h3 className="font-bold text-lg">{name}</h3>
-            <p className="text-sm font-normal">{status}</p>
+            <div className="flex items-center gap-1">
+              <span
+                className={`w-3 h-3 inline-block rounded-full ring-inset ring-1 ring-opacity-50 shadow-inner ${statusStyle}`}
+              />
+              <span className="text-xs font-normal uppercase">{status}</span>
+            </div>
           </div>
         </div>
       </div>
