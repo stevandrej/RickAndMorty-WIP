@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import Spinner from "../components/Spinner";
 import useGetCharacters from "../queries/useGetCharacters";
 import CharactersList from "../features/characters/CharactersList";
@@ -8,12 +9,14 @@ import { useSearchParams } from "react-router-dom";
 export default function CharactersPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = Number(searchParams.get("page") ?? 1);
-  console.log(page);
   const { data, isLoading, isError, error } = useGetCharacters(page);
 
-  const handlePageChange = (newPage: number) => {
-    setSearchParams({ page: newPage.toString() });
-  };
+  const handlePageChange = useCallback(
+    (newPage: number) => {
+      setSearchParams({ page: newPage.toString() });
+    },
+    [setSearchParams]
+  );
 
   if (isLoading) {
     return (
