@@ -10,7 +10,7 @@ interface CardProps {
 
 const Card = React.memo(
   ({ status, name, location, image, action }: CardProps) => {
-    const alive = "bg-green-600 ring-green-500 shadow-green-500 animate-pulse";
+    const alive = "bg-green-600 ring-green-500 shadow-green-400 animate-pulse";
     const dead = "bg-red-800 ring-red-600 shadow-red-500";
     const unknown = "bg-gray-600 ring-gray-500 shadow-gray-500";
     let statusStyle = "";
