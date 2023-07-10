@@ -2,6 +2,7 @@ import Spinner from "../components/Spinner";
 import useGetCharacters from "../queries/useGetCharacters";
 import CharactersList from "../features/characters/CharactersList";
 import { ErrorBoundary } from "react-error-boundary";
+import Pagination from "../components/Pagination";
 
 export default function CharactersPage() {
   const { data, isLoading, isError, error } = useGetCharacters();
@@ -29,7 +30,10 @@ export default function CharactersPage() {
             )}
           </ErrorBoundary>
         ) : (
-          <CharactersList data={data} />
+          <>
+            <CharactersList data={data} />
+            <Pagination />
+          </>
         )}
       </section>
     </div>
