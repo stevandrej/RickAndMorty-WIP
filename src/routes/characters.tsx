@@ -15,7 +15,7 @@ export default function CharactersPage() {
   }
 
   return (
-    <div className="py-12">
+    <div className="py-12 px-10 2xl:px-0">
       <section className="max-w-6xl mx-auto">
         {isError ? (
           <ErrorBoundary
