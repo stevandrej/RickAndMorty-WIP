@@ -1,39 +1,49 @@
+import { useSearchParams } from "react-router-dom";
 import PaginationItem from "./PaginationItem";
+import { useCallback } from "react";
 
 interface PaginationProps {
-  current: number;
-  onChange: (newPage: number) => void;
   total: number;
 }
 
-export default function Pagination({
-  current,
-  onChange,
-  total,
-}: PaginationProps) {
+export default function Pagination({ total }: PaginationProps) {
   let pages: number[] = [];
 
-  if (total <= 10) {
-    pages = Array.from({ length: total }, (_, index) => index + 1);
-  } else {
-    const startPages = Array.from({ length: 3 }, (_, index) => index + 1);
-    const endPages = Array.from({ length: 3 }, (_, index) => total - 2 + index);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const current = Number(searchParams.get("page") ?? 1);
 
-    pages = [...startPages, ...endPages];
+  const handlePageChange = useCallback(
+    (newPage: number) => {
+      searchParams.set("page", newPage.toString());
+      setSearchParams(searchParams);
+    },
+    [searchParams, setSearchParams]
+  );
+
+  if (total > 10) {
+    // Calculate the range of pages to display
+    const startPage = Math.max(1, current - 5);
+    const endPage = Math.min(startPage + 9, total);
+
+    // Generate the array of page numbers to display
+    pages = Array.from(
+      { length: endPage - startPage + 1 },
+      (_, index) => startPage + index
+    );
+  } else {
+    // Generate the array of page numbers to display
+    pages = Array.from({ length: total }, (_, index) => index);
   }
 
   return (
     <div className="mx-auto my-6 max-w-lg">
       <ul className="flex justify-center text-center gap-1">
-        {pages.map((page, index) => {
-          if (index === 3 && total > 10) {
-            return <li key="dots">...</li>;
-          }
+        {pages.map((page) => {
           return (
             <PaginationItem
               key={page}
               page={page}
-              handleClick={onChange}
+              handleClick={handlePageChange}
               isActive={page === current}
             />
           );
