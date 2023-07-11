@@ -12,12 +12,14 @@ import CharactersPage from "./routes/characters";
 import EpisodesPage from "./routes/episodes";
 import LocationsPage from "./routes/locations";
 import Home from "./routes/home";
+import Character from "./routes/character";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
       <Route index element={<Home />} />
       <Route path="characters" element={<CharactersPage />} />
+      <Route path="characters/:id" element={<Character />} />
       <Route path="episodes" element={<EpisodesPage />} />
       <Route path="locations" element={<LocationsPage />} />
     </Route>
