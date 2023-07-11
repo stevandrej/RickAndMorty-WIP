@@ -2,7 +2,6 @@ import useGetCharacters from "../queries/useGetCharacters";
 import CharactersList from "../features/characters/CharactersList";
 import Pagination from "../components/Pagination/Pagination";
 import { useSearchParams } from "react-router-dom";
-import Container from "../components/Layouts/Container";
 import PageSpinner from "../components/PageSpinner";
 import Grid from "../components/Layouts/Grid";
 import PageErrorBoundary from "../components/PageErrorBoundary";
@@ -18,7 +17,7 @@ export default function CharactersPage() {
   }
 
   return (
-    <Container>
+    <>
       {isError ? (
         <PageErrorBoundary error={error} />
       ) : (
@@ -29,6 +28,6 @@ export default function CharactersPage() {
           <Pagination total={data.info.pages} />
         </>
       )}
-    </Container>
+    </>
   );
 }

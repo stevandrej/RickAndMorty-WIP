@@ -1,7 +1,10 @@
+import { Gender } from "./Gender";
+import { Status } from "./Status";
+
 export interface Character {
   id: number;
   name: string;
-  status: string;
+  status: Status;
   species: string;
   type: string;
   gender: string;
@@ -21,8 +24,8 @@ export interface Character {
 
 export interface CharacterFilter {
   name?: string;
-  status?: "alive" | "dead" | "unknown";
+  status?: Status;
   species?: string;
   type?: string;
-  gender?: "female" | "male" | "genderless" | "unknown";
+  gender?: Gender;
 }

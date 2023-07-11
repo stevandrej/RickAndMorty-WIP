@@ -1,9 +1,11 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import StatusLight from "../../components/StatusLight";
+import { Status } from "../../types/Status";
 
 interface CardProps {
   id: number;
-  status?: string;
+  status?: Status;
   name?: string;
   location?: string;
   image: string;
@@ -12,23 +14,6 @@ interface CardProps {
 const Card = React.memo(({ id, status, name, location, image }: CardProps) => {
   const navigate = useNavigate();
   const urlLocation = useLocation();
-
-  const alive = "bg-green-600 ring-green-500 shadow-green-400 animate-pulse";
-  const dead = "bg-red-800 ring-red-600 shadow-red-500";
-  const unknown = "bg-gray-600 ring-gray-500 shadow-gray-500";
-  let statusStyle = "";
-
-  switch (status?.toLowerCase()) {
-    case "alive":
-      statusStyle = alive;
-      break;
-    case "dead":
-      statusStyle = dead;
-      break;
-    default:
-      statusStyle = unknown;
-      break;
-  }
 
   const handleClick = () => {
     navigate(`${urlLocation.pathname}/${id}`);
@@ -59,9 +44,7 @@ const Card = React.memo(({ id, status, name, location, image }: CardProps) => {
         >
           <h3 className="font-bold text-lg">{name}</h3>
           <div className="flex items-center gap-1">
-            <span
-              className={`w-3 h-3 inline-block rounded-full ring-inset ring-1 ring-opacity-50 shadow-inner ${statusStyle}`}
-            />
+            <StatusLight status={status} />
             <span className="text-xs font-normal uppercase">{status}</span>
           </div>
         </div>
