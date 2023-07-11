@@ -5,7 +5,7 @@ export default function NavBar() {
 
   return (
     <nav>
-      <ul className="flex justify-end list-none bg-slate-300 py-4 px-10 gap-6 text-slate-800">
+      <ul className="flex justify-end list-none bg-slate-300/80 py-4 px-10 gap-6 text-slate-800 backdrop-blur-2xl">
         <li>
           <NavLink
             to="/"

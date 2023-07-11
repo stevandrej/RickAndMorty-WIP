@@ -36,7 +36,7 @@ export default function Pagination({ total }: PaginationProps) {
   }
 
   return (
-    <div className="mx-auto my-6 max-w-lg">
+    <div className="mx-auto mt-12 max-w-lg">
       <ul className="flex justify-center text-center gap-1">
         {pages.map((page) => {
           return (
