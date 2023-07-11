@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import Container from "../components/Layouts/Container";
 import useGetCharacter from "../queries/useGetCharacter";
-import PageSpinner from "../components/Layouts/PageSpinner";
+import PageSpinner from "../components/PageSpinner";
 import PageErrorBoundary from "../components/PageErrorBoundary";
 import PageBackdrop from "../components/PageBackdrop";
 

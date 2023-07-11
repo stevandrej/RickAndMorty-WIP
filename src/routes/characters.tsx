@@ -3,7 +3,7 @@ import CharactersList from "../features/characters/CharactersList";
 import Pagination from "../components/Pagination/Pagination";
 import { useSearchParams } from "react-router-dom";
 import Container from "../components/Layouts/Container";
-import PageSpinner from "../components/Layouts/PageSpinner";
+import PageSpinner from "../components/PageSpinner";
 import Grid from "../components/Layouts/Grid";
 import PageErrorBoundary from "../components/PageErrorBoundary";
 
