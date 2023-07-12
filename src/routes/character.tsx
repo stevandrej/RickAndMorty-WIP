@@ -3,7 +3,7 @@ import useGetCharacter from "../queries/useGetCharacter";
 import PageSpinner from "../components/PageSpinner";
 import PageErrorBoundary from "../components/PageErrorBoundary";
 import PageBackdrop from "../components/PageBackdrop";
-import StatusLight from "../components/StatusLight";
+import StatusLight from "../components/StatusLight/StatusLight";
 
 export default function Character() {
   const { id } = useParams();

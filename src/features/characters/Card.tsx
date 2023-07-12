@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import StatusLight from "../../components/StatusLight";
+import StatusLight from "../../components/StatusLight/StatusLight";
 import { Status } from "../../types/Status";
 
 interface CardProps {
