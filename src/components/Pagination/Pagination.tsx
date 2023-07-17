@@ -1,14 +1,12 @@
 import { useSearchParams } from "react-router-dom";
 import PaginationItem from "./PaginationItem";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 interface PaginationProps {
   total: number;
 }
 
 export default function Pagination({ total }: PaginationProps) {
-  let pages: number[] = [];
-
   const [searchParams, setSearchParams] = useSearchParams();
   const current = Number(searchParams.get("page") ?? 1);
 
@@ -20,25 +18,58 @@ export default function Pagination({ total }: PaginationProps) {
     [searchParams, setSearchParams]
   );
 
-  if (total > 10) {
-    // Calculate the range of pages to display
-    const startPage = Math.max(1, current - 5);
-    const endPage = Math.min(startPage + 9, total);
+  const determineDisplayedPages = useCallback(() => {
+    if (total > 15) {
+      // Navigation first 5 pages
+      if (current < 5) {
+        const firstPages = [1, 2, 3, 4, 5];
+        const lastPages = Array.from(
+          { length: 3 },
+          (_, index) => total - index
+        ).reverse();
+        return [...firstPages, ...lastPages];
+      }
 
-    // Generate the array of page numbers to display
-    pages = Array.from(
-      { length: endPage - startPage + 1 },
-      (_, index) => startPage + index
-    );
-  } else {
-    // Generate the array of page numbers to display
-    pages = Array.from({ length: total }, (_, index) => index);
-  }
+      // Navigation last 5 pages
+      else if (current <= total && current > total - 4) {
+        const firstPages = [1, 2, 3];
+        const lastPages = Array.from(
+          { length: 5 },
+          (_, index) => total - index
+        ).reverse();
+        return [...firstPages, ...lastPages];
+      }
+
+      // Navigation above fifth page and last (total-5) pages [1, 2, 3, 4, 5 ... 36, 37, 38, 39, 40]
+      else {
+        const firstPages = [1, 2, 3];
+        const lastPages = Array.from(
+          { length: 3 },
+          (_, index) => total - index
+        ).reverse();
+        const middlePages = [
+          current - 2,
+          current - 1,
+          current,
+          current + 1,
+          current + 2,
+        ];
+
+        return [...new Set([...firstPages, ...middlePages, ...lastPages])];
+      }
+    } else {
+      return Array.from({ length: total }, (_, index) => index);
+    }
+  }, [current, total]);
+
+  const displayedPages = useMemo(determineDisplayedPages, [
+    determineDisplayedPages,
+  ]);
 
   return (
     <div className="mx-auto mt-12 max-w-lg">
       <ul className="flex justify-center text-center gap-1">
-        {pages.map((page) => {
+        {displayedPages.map((page) => {
           return (
             <PaginationItem
               key={page}
