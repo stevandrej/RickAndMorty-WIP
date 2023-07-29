@@ -10,7 +10,7 @@ export const determineDisplayedPages = (total: number, current: number) => {
     // Navigation last 5 pages
     else if (current <= total && current > total - 4) {
       const firstPages = [1, 2, 3];
-      const lastPages = [total, total - 1, total - 2, total - 3, total - 4];
+      const lastPages = [ total - 4, total - 3, total - 2, total - 1, total];
       return [...firstPages, ...lastPages];
     }
 
